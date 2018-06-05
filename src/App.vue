@@ -64,7 +64,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
-    margin-top: 60px;
+    padding-top: 60px;
   }
 
   a {
@@ -84,6 +84,10 @@
     right: 0;
     width: 100px;
     margin: auto;
+    text-align: center;
+  }
+  .controller__button > button {
+    /*display: block;*/
   }
 
   .controller__button.controller__button--left {
@@ -102,6 +106,9 @@
     top: 200px;
   }
 
+  .speedUI {
+    margin-left: 20px;
+  }
   .speedUI__slider {
     text-align: center;
     vertical-align: middle;

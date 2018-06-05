@@ -10,6 +10,5 @@ Vue.use(VueMaterial);
 
 new Vue({
   el: '#app',
-
   render: h => h(App)
 });
