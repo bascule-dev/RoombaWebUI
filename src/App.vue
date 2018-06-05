@@ -2,26 +2,27 @@
   <div id="app">
     <div class="controller">
       <div class="controller__button controller__button--top">
-        <md-button class="md-fab">
+        <md-button class="md-fab" @mousedown="startTouch(0, 1)" @touchstart="startTouch(0, 1)">
           <md-icon>arrow_drop_up</md-icon>
         </md-button>
       </div>
       <div class="controller__button  controller__button--bottom">
-        <md-button class="md-fab">
+        <md-button class="md-fab" @mousedown="startTouch(0, -1)" @touchstart="startTouch(0, -1)">
           <md-icon>arrow_drop_down</md-icon>
         </md-button>
       </div>
       <div class="controller__button  controller__button--left">
-        <md-button class="md-fab">
+        <md-button class="md-fab" @mousedown="startTouch(-1, 0)" @touchstart="startTouch(-1, 0)">
           <md-icon>arrow_left</md-icon>
         </md-button>
       </div>
       <div class="controller__button  controller__button--right">
-        <md-button class="md-fab">
+        <md-button class="md-fab" @mousedown="startTouch(1, 0)" @touchstart="startTouch(1, 0)">
           <md-icon>arrow_right</md-icon>
         </md-button>
       </div>
     </div>
+
     <div class="speedUI">
       <div class="speedUI__title">Speed</div>
       <div class="speedUI__slider">
@@ -35,6 +36,9 @@
         </range-slider>
       </div>
     </div>
+
+    <div class="debug">x: {{x}} <br> y: {{y}} <br> touch: {{isTouch}}</div>
+    <div class="debug">{{debugText}}</div>
   </div>
 </template>
 
@@ -51,8 +55,55 @@
     },
     data() {
       return {
-        msg: 'Welcome to Your Vue.js App',
+        isTouch: false,
+        debugText: "",
+        x: 0,
+        y: 0,
         speed: 10
+      }
+    },
+    methods: {
+      reset() {
+        this.x = 0;
+        this.y = 0;
+        this.isTouch = false;
+        this.debugText = "";
+      },
+      startTouch(x, y) {
+        this.x = x;
+        this.y = y;
+        this.isTouch = true;
+        this.addEvent();
+        this.update();
+      },
+      addEvent() {
+        console.log("[App] addevent");
+        window.addEventListener("touchend", this.onEndTouch);
+        window.addEventListener("mouseup", this.onEndTouch);
+      },
+      removeEvent() {
+        window.removeEventListener("touchend", this.onEndTouch);
+        window.removeEventListener("mouseup", this.onEndTouch);
+      },
+      onEndTouch() {
+        console.log("[App] onEndTouch");
+        this.removeEvent();
+        this.reset();
+      },
+
+      update() {
+        if (!this.isTouch) return;
+
+        requestAnimationFrame(this.update);
+        this.emit();
+
+      },
+
+
+      emit() {
+        if (this.debugText.length > 32)
+          this.debugText = "";
+        this.debugText += "+";
       }
     }
   }
