@@ -47,6 +47,7 @@
   import RangeSlider from 'vue-range-slider'
   // you probably need to import built-in style
   import 'vue-range-slider/dist/vue-range-slider.css'
+  import Socket from "./Socket"
 
   export default {
     name: 'app',
@@ -59,7 +60,8 @@
         debugText: "",
         x: 0,
         y: 0,
-        speed: 10
+        speed: 50,
+        socket: new Socket()
       }
     },
     methods: {
