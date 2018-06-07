@@ -59,7 +59,9 @@
         isTouch: false,
         debugText: "",
         x: 0,
+        vx: 0,
         y: 0,
+        vy: 0,
         speed: 50,
         socket: new Socket()
       }
@@ -72,8 +74,8 @@
         this.debugText = "";
       },
       startTouch(x, y) {
-        this.x = x;
-        this.y = y;
+        this.vx = x;
+        this.vy = y;
         this.isTouch = true;
         this.addEvent();
         this.update();
@@ -89,16 +91,41 @@
       },
       onEndTouch() {
         console.log("[App] onEndTouch");
+        this.isTouch = false;
         this.removeEvent();
-        this.reset();
+        this.updateEase();
+        // this.reset();
+        // this.emitStop();
       },
 
       update() {
         if (!this.isTouch) return;
 
+        if (Math.abs(this.vx - this.x) > 0.01)
+          this.x += (this.vx - this.x) * 0.05;
+        else
+          this.x = this.vx;
+        if (Math.abs(this.vy - this.y) > 0.01)
+          this.y += (this.vy - this.y) * 0.05;
+        else
+          this.y = this.vy;
         requestAnimationFrame(this.update);
         this.emit();
 
+      },
+
+      updateEase() {
+        if (this.isTouch) return;
+        this.x += (0 - this.x) * 0.05;
+        this.y += (0 - this.y) * 0.05;
+        console.log("[App] update ease", this.x, this.y);
+        if (Math.abs(this.x) < 0.01 && Math.abs(this.y) < 0.01) {
+          this.reset();
+          this.emitStop();
+          return;
+        }
+        requestAnimationFrame(this.updateEase);
+        this.emit();
       },
 
 
@@ -106,7 +133,12 @@
         if (this.debugText.length > 32)
           this.debugText = "";
         this.debugText += "+";
+        this.socket.emit(this.x, this.y, this.speed )
+      },
+      emitStop() {
+        this.socket.emit(0, 0, 0);
       }
+
     }
   }
 </script>

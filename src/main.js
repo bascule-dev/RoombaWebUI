@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
-import Util from "./Util"
-Util.init();
+import Config from "./Config"
+Config.init();
 
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
