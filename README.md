@@ -18,4 +18,6 @@ npm run dev -- --host 192.168.11.91
 npm run build
 ```
 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## 使う
+
+github bascule/?ip=ほげほげ:3000

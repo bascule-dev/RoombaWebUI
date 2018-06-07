@@ -37,8 +37,12 @@
       </div>
     </div>
 
-    <div class="debug">x: {{x}} <br> y: {{y}} <br> touch: {{isTouch}}</div>
-    <div class="debug">{{debugText}}</div>
+    <div class="debugContainer">
+      <div class="debug">socket: {{socket.wsOpen}}</div>
+      <div class="debug">x: {{x}} <br> y: {{y}} <br> touch: {{isTouch}}</div>
+      <div class="debug">{{debugText}}</div>
+    </div>
+
   </div>
 </template>
 
@@ -48,6 +52,7 @@
   // you probably need to import built-in style
   import 'vue-range-slider/dist/vue-range-slider.css'
   import Socket from "./Socket"
+  import Config from "./Config"
 
   export default {
     name: 'app',
@@ -57,6 +62,7 @@
     data() {
       return {
         isTouch: false,
+        socketState: "",
         debugText: "",
         x: 0,
         vx: 0,
@@ -128,12 +134,11 @@
         this.emit();
       },
 
-
       emit() {
         if (this.debugText.length > 32)
           this.debugText = "";
         this.debugText += "+";
-        this.socket.emit(this.x, this.y, this.speed )
+        this.socket.emit(this.x, this.y, this.speed * Config.speedAmp)
       },
       emitStop() {
         this.socket.emit(0, 0, 0);
@@ -200,5 +205,13 @@
   }
   .speedUI__slider .slider {
     width: 80%;
+  }
+
+  .debugContainer {
+    width: 90%;
+    margin: 1em auto;
+    border: 1px solid #ccc;
+    padding: 1em;
+
   }
 </style>
