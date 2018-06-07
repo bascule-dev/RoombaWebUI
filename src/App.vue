@@ -1,5 +1,7 @@
 <template>
-  <div id="app">
+  <div id="app"
+
+  >
     <div class="controller">
       <div class="controller__button controller__button--top">
         <md-button class="md-fab" @mousedown="startTouch(0, 1)" @touchstart="startTouch(0, 1)">
@@ -54,7 +56,7 @@
   import Socket from "./Socket"
   import Config from "./Config"
 
-  export default {
+  const app = {
     name: 'app',
     components: {
       RangeSlider
@@ -145,7 +147,8 @@
       }
 
     }
-  }
+  };
+  export default app;
 </script>
 
 <style>
